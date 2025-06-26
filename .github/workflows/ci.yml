@@ -27,6 +27,8 @@ jobs:
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
       - name: Install dependencies
         run: poetry install
+      - name: Install tox
+        run: poetry add tox
       - name: Linting checks
         working-directory: ./src
         run: tox -e lint
