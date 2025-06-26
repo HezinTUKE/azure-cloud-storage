@@ -80,9 +80,7 @@ class UploadHandler:
         df.to_csv(buffer, index=False)
         saved_blob = await azure_storage.save_csv_blob(uploaded_file=buffer)
         dtc = cls.create_dtc_model(
-            file_name=file_name,
-            uploaded_at=int(saved_blob.get("date").timestamp()),
-            file_size=int(buffer.getbuffer().nbytes)
+            file_name=file_name, uploaded_at=int(saved_blob.get("date").timestamp()), file_size=int(buffer.getbuffer().nbytes)
         )
         buffer.close()
 

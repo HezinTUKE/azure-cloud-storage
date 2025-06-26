@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  flow:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Action description
+        run: echo "User - ${{ github.actor }}, action - ${{ github.event_name }}, repo - ${{ github.repository }}"
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Set up python 3.11.9
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.11.9'
+      - name: Install Poetry
+        run: curl -sSL https://install.python-poetry.org | python3 -
+      - name: Add Poetry to PATH
+        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: Install dependencies
+        run: poetry install
+      - name: Linting checks
+        working-directory: ./src
+        run: tox -e lint
